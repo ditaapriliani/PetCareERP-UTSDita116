@@ -124,6 +124,8 @@ function RootComponent() {
 
     if (!loggedIn && !isLoginPage) {
       router.navigate({ to: "/" });
+    } else if (loggedIn && isLoginPage) {
+      router.navigate({ to: "/dashboard" });
     }
   }, [pathname, isLoginPage, router]);
 

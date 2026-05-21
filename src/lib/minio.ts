@@ -1,12 +1,12 @@
 import * as Minio from 'minio'
 
-const endpoint = process.env.MINIO_ENDPOINT as string
-const portStr = process.env.MINIO_PORT as string
+const endpoint = process.env.MINIO_ENDPOINT || 'localhost'
+const portStr = process.env.MINIO_PORT || '9100'
 const port = parseInt(portStr, 10)
 const useSSL = process.env.MINIO_USE_SSL === 'true'
-const accessKey = process.env.MINIO_ACCESS_KEY as string
-const secretKey = process.env.MINIO_SECRET_KEY as string
-const bucketName = process.env.MINIO_BUCKET as string
+const accessKey = process.env.MINIO_ACCESS_KEY || 'minioadmin'
+const secretKey = process.env.MINIO_SECRET_KEY || 'minioadmin'
+const bucketName = process.env.MINIO_BUCKET || 'uploads'
 
 export const minioClient = new Minio.Client({
   endPoint: endpoint,

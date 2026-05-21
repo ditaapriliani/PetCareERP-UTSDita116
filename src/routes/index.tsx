@@ -26,6 +26,14 @@ function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Check if already logged in on mount
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("petcare_logged_in") === "true";
+    if (loggedIn) {
+      router.navigate({ to: "/dashboard" });
+    }
+  }, [router]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");

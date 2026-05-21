@@ -29,7 +29,7 @@ export const Route = createFileRoute('/upload/employee-document')({
           // Upload to MinIO
           const buffer = Buffer.from(await file.arrayBuffer())
           await minioClient.putObject(
-            process.env.MINIO_BUCKET as string,
+            process.env.MINIO_BUCKET || 'uploads',
             filename,
             buffer,
             buffer.length,
