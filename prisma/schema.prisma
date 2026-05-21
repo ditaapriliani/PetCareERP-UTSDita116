@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//
+// =========================
+// CRM MODULE
+// =========================
+//
+
+model Customer {
+  id          String      @id @default(cuid())
+  name        String
+  email       String?     @unique
+  phone       String?
+  address     String?
+  transactions Transaction[]
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  category    String
+  description String?
+  price       Int
+  stock       Int
+
+  // URL gambar dari MinIO
+  imageUrl    String?
+
+  transactions Transaction[]
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Transaction {
+  id          String      @id @default(cuid())
+
+  customerId  String
+  customer    Customer    @relation(fields: [customerId], references: [id])
+
+  productId   String
+  product     Product     @relation(fields: [productId], references: [id])
+
+  quantity    Int
+  totalPrice  Int
+  status      String      @default("Pending")
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+//
+// =========================
+// HR MODULE
+// =========================
+//
+
+model Employee {
+  id            String    @id @default(cuid())
+
+  name          String
+  email         String?   @unique
+  phone         String?
+  position      String
+  address       String?
+
+  // URL file dari MinIO
+  photoUrl      String?
+  documentUrl   String?
+
+  salary        Int?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
