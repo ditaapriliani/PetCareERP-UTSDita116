@@ -1,0 +1,4 @@
+{
+    "installCommand": "bun install && npx prisma generate",
+    "buildCommand": "vite build"
+}
